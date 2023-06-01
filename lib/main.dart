@@ -41,12 +41,14 @@ class MealListScreen extends StatelessWidget {
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(meal!.thumbnailUrl),
+                    radius: 50,
+
                   ),
                   title: Text(
                     meal.name,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.normal,
                     ),
                   ),
@@ -58,6 +60,8 @@ class MealListScreen extends StatelessWidget {
                       ),
                     );
                   },
+                    horizontalTitleGap: 0,
+                  minVerticalPadding: 30,
                 );
               },
             );
@@ -99,8 +103,9 @@ class MealScreen extends StatelessWidget {
             return GridView.builder(
               padding: const EdgeInsets.all(10),
               itemCount: categories?.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Number of columns
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: context.isTablet ? 4 : 2, // Number of columns
+                childAspectRatio: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
@@ -126,7 +131,7 @@ class MealScreen extends StatelessWidget {
                         categories![index].name,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -425,4 +430,9 @@ Future<Map<String, dynamic>> fetchMealDetail(String mealId) async {
   } else {
     throw Exception('Failed to fetch meal detail');
   }
+}
+
+extension ContextExtension on BuildContext {
+  bool get isTablet => MediaQuery.of(this).size.shortestSide > 800;
+  bool get isPhone => MediaQuery.of(this).size.shortestSide < 600;
 }
