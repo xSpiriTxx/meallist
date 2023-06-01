@@ -1,6 +1,6 @@
-# prop_track
+# meal_list
 
-Property Price Navigator and Marketplace
+Search and list meals by category
 
 ## Getting Started
 
